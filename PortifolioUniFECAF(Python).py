@@ -82,13 +82,13 @@ def visualizar_inscritos():
             for aluno in inscritos:
                 print(aluno)
             while True:
-                sair = input('Deseja voltar à tela inicial? (S/N): ')
-                if sair.lower() in ['s', 'n']:
-                    if sair.lower() == 's':
-                        break
-                    else:
-                        print("Opção inválida. Tente novamente.\n")
-            time.sleep(2)    
+                voltar = input('Deseja voltar ao menu principal? (S/N): ')
+                if voltar.lower() == 's':
+                    break
+                elif voltar.lower() == 'n':
+                    pass
+                else:
+                    print("Opção inválida. Tente novamente.\n")
         else:
             print(f"Ninguém está cadastrado no evento {Evento_name}.")
     else:
@@ -108,12 +108,16 @@ def inscrever_aluno():
 
     Evento_name = input('Digite o nome do evento que deseja se inscrever: ')
     if Evento_name in evento:
-        if len(evento[Evento_name]['Inscritos']) < evento[Evento_name]['Quantidade de pessoas permitidas']:
+        while len(evento[Evento_name]['Inscritos']) < evento[Evento_name]['Quantidade de pessoas permitidas']:
             Aluno_nome = input('Digite seu nome: ')
             evento[Evento_name]['Inscritos'].append(Aluno_nome)
             print(f"{Aluno_nome} inscrito com sucesso no evento {Evento_name}.\n")
-        else:
-            print(f"Desculpe, o evento {Evento_name} já atingiu o número máximo de inscritos.\n")
+            if len(evento[Evento_name]['Inscritos']) >= evento[Evento_name]['Quantidade de pessoas permitidas']:
+                print(f"O evento {Evento_name} atingiu o número máximo de inscritos.\n")
+                break
+            adicionar_mais = input('Deseja adicionar outra pessoa a este evento? (S/N): ')
+            if adicionar_mais.lower() != 's':
+                break
     else:
         print(f"O evento {Evento_name} não existe.\n")
     time.sleep(2)
