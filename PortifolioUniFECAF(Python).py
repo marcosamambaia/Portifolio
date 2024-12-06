@@ -81,6 +81,14 @@ def visualizar_inscritos():
             print(f"Inscritos no evento {Evento_name}:")
             for aluno in inscritos:
                 print(aluno)
+            while True:
+                sair = input('Deseja voltar à tela inicial? (S/N): ')
+                if sair.lower() in ['s', 'n']:
+                    if sair.lower() == 's':
+                        break
+                    else:
+                        print("Opção inválida. Tente novamente.\n")
+            time.sleep(2)    
         else:
             print(f"Ninguém está cadastrado no evento {Evento_name}.")
     else:
