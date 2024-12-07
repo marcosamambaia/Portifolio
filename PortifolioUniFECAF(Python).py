@@ -9,8 +9,21 @@ def visualizar_eventos():
         print("Nenhum evento cadastrado.")
     else:
         for nome, detalhes in evento.items():
-            print(f"Evento: {nome}, Quantidade de pessoas permitidas: {detalhes['Quantidade de pessoas permitidas']}, Data: {detalhes['Data marcada']}, Hora: {detalhes['Hora p/ inicio do Evento']}")
-    print("\n")
+            print(f"Evento: {nome}")
+            print(f"  Quantidade de pessoas permitidas: {detalhes['Quantidade de pessoas permitidas']}")
+            print(f"  Data: {detalhes['Data marcada']}")
+            print(f"  Hora: {detalhes['Hora p/ inicio do Evento']}")
+            print(f"  Inscritos: {', '.join(detalhes['Inscritos']) if detalhes['Inscritos'] else 'Nenhum inscrito'}")
+            print("\n")
+    time.sleep(2)
+    while True:
+        voltar = input('Deseja voltar ao menu principal? (S/N): ')
+        if voltar.lower() == 's':
+            break
+        elif voltar.lower() == 'n':
+            pass
+        else:
+            print("Opção inválida. Tente novamente.\n")
     time.sleep(2)
 
 def criar_evento():
