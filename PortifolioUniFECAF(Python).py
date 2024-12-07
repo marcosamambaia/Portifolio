@@ -65,8 +65,6 @@ def editar_evento():
         print(f"O evento {Evento_name} não existe.\n")
     time.sleep(2)
 
-
-
 # Função para excluir um evento existente
 def excluir_evento():
     if not evento:
@@ -116,7 +114,6 @@ def visualizar_inscritos():
         print(f"O evento {Evento_name} não existe.\n")
     time.sleep(2)
 
-
 # Função para inscrever alunos em um evento
 def inscrever_aluno():
     if not evento:
@@ -128,7 +125,7 @@ def inscrever_aluno():
     for nome, detalhes in evento.items():
         # Verificar se o número de inscritos é maior ou igual ao número de vagas permitidas
         if len(detalhes['Inscritos']) >= detalhes['Quantidade de pessoas permitidas']:
-            status_vagas = "Completo"
+            status_vagas = "Completo, nao tem vagas disponiveis"
         else:
             status_vagas = "Vagas Disponíveis"
         # Exibir o nome do evento e seu status de vagas
@@ -180,7 +177,6 @@ def menu_cordenador():
         except ValueError:
             print("Entrada inválida. Por favor, digite um número válido.\n")
         time.sleep(2)
-
 
 # Função para o menu principal, permitindo escolher entre a área do aluno e a área da coordenação
 def menu_principal():
