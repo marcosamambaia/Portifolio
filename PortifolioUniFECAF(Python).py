@@ -4,6 +4,30 @@ import time
 # Dicionário para armazenar os eventos
 evento = {}
 
+# Variável para armazenar o tipo de usuário (coordenador ou aluno)
+tipo_usuario = ""
+
+# Função para definir o tipo de usuário
+def menu_inicial():
+    global tipo_usuario
+    while True:
+        print('************** Controle de Eventos da UniFECAF **************\n')
+        print('Informe seu perfil:\n')
+        print('(1) Coordenador\n(2) Aluno\n')
+        try:
+            escolha = int(input("Digite a opção desejada: "))
+            if escolha == 1:
+                tipo_usuario = "coordenador"
+                break
+            elif escolha == 2:
+                tipo_usuario = "aluno"
+                break
+            else:
+                print("Opção inválida. Tente novamente.\n")
+        except ValueError:
+            print("Entrada inválida. Por favor, digite um número válido.\n")
+        time.sleep(2)
+
 # Função para visualizar todos os eventos cadastrados
 def visualizar_eventos():
     print("Eventos Atuais:")
@@ -21,6 +45,7 @@ def visualizar_eventos():
             print(f"  Status: {status_vagas}")
             print("\n")
     time.sleep(2)
+
 
 
 # Função para criar um novo evento
@@ -201,26 +226,34 @@ def menu_cordenador():
 def menu_principal():
     while True:
         print('************** Controle de Eventos da UniFECAF **************\n')
-        print('Escolha aopção respeitando o criterio de Aluno e Cordenador:\n')
-        print('(1) Área do Aluno (inscrever em eventos) \n(2) Área da Coordenação\n(3) Visualizar Eventos\n(4) Sair\n')
+        if tipo_usuario == "coordenador":
+            print('Escolha a opção:\n')
+            print('(1) Área do Aluno (inscrever em eventos) \n(2) Área da Coordenação\n(3) Visualizar Eventos\n(4) Voltar ao Menu Inicial\n')
+        else:
+            print('Escolha a opção:\n')
+            print('(1) Área do Aluno (inscrever em eventos) \n(3) Visualizar Eventos\n(4) Voltar ao Menu Inicial\n')
         try:
             Escolha_Usuario = int(input("Digite a opção desejada: "))
             if Escolha_Usuario == 1:
                 inscrever_aluno()
-            elif Escolha_Usuario == 2:
+            elif Escolha_Usuario == 2 and tipo_usuario == "coordenador":
                 menu_cordenador()
             elif Escolha_Usuario == 3:
                 visualizar_eventos()
                 if not evento:
                     time.sleep(2)
             elif Escolha_Usuario == 4:
-                print("Saindo do sistema...")
-                break
+                return  # Voltar ao menu inicial
             else:
                 print("Opção inválida. Tente novamente.\n")
         except ValueError:
             print("Entrada inválida. Por favor, digite um número válido.\n")
         time.sleep(2)
 
-# Iniciar o menu principal
-menu_principal()
+## Iniciar o programa
+def iniciar_programa():
+    while True:
+        menu_inicial()
+        menu_principal()
+
+iniciar_programa()
