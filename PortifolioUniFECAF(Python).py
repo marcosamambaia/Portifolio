@@ -11,36 +11,25 @@ def visualizar_eventos():
         print("Nenhum evento cadastrado.")  # Exibe mensagem se não houver eventos
     else:
         for nome, detalhes in evento.items():
-            status_vagas = "Lotado" if len(detalhes['Inscritos']) >= detalhes['Quantidade de pessoas permitidas'] else "Vagas Disponíveis"
             print(f"Evento: {nome}")
-            print(f"  Descrição: {detalhes['Descrição']}")
             print(f"  Quantidade de pessoas permitidas: {detalhes['Quantidade de pessoas permitidas']}")
             print(f"  Data: {detalhes['Data marcada']}")
             print(f"  Hora: {detalhes['Hora p/ inicio do Evento']}")
             print(f"  Inscritos: {', '.join(detalhes['Inscritos']) if detalhes['Inscritos'] else 'Nenhum inscrito'}")
-            print(f"  Status: {status_vagas}")
             print("\n")
     time.sleep(2)
-
 
 # Função para criar um novo evento
 def criar_evento():
     while True:
         try:
             Evento_name = input('Digite o nome do evento: ')
-            Descricao = input('Digite a descrição do evento: ')
             Quant_Pess_Perm = int(input('Quantidade de pessoas permitidas nesse evento: '))
             Data_Event = input('Informe a data do evento: ')
             Hora_Event = input('Informe a hora do evento: ')
             
             # Armazenar os detalhes do evento no dicionário
-            evento[Evento_name] = {
-                'Descrição': Descricao,
-                'Quantidade de pessoas permitidas': Quant_Pess_Perm,
-                'Data marcada': Data_Event,
-                'Hora p/ inicio do Evento': Hora_Event,
-                'Inscritos': []
-            }
+            evento[Evento_name] = {'Quantidade de pessoas permitidas': Quant_Pess_Perm, 'Data marcada': Data_Event, 'Hora p/ inicio do Evento': Hora_Event, 'Inscritos': []}
             print(f"Evento {Evento_name} marcado com sucesso.\n")
             
             # Perguntar se deseja adicionar outro evento
@@ -62,19 +51,12 @@ def editar_evento():
         try:
             # Tenta executar o código abaixo, que pode causar erro se os dados de entrada forem inválidos
             print(f"Editando evento {Evento_name}")
-            Descricao = input('Nova descrição do evento: ')
             Quant_Pess_Perm = int(input('Nova quantidade de pessoas permitidas: '))
             Data_Event = input('Nova data do evento: ')
             Hora_Event = input('Nova hora do evento: ')
 
             # Atualizar os detalhes do evento no dicionário
-            evento[Evento_name] = {
-                'Descrição': Descricao,
-                'Quantidade de pessoas permitidas': Quant_Pess_Perm,
-                'Data marcada': Data_Event,
-                'Hora p/ inicio do Evento': Hora_Event,
-                'Inscritos': evento[Evento_name]['Inscritos']
-            }
+            evento[Evento_name] = {'Quantidade de pessoas permitidas': Quant_Pess_Perm, 'Data marcada': Data_Event, 'Hora p/ inicio do Evento': Hora_Event, 'Inscritos': evento[Evento_name]['Inscritos']}
             print(f"Evento {Evento_name} atualizado com sucesso.\n")
         except ValueError:
             # Exibe mensagem de erro se os dados de entrada forem inválidos
@@ -195,7 +177,6 @@ def menu_cordenador():
         except ValueError:
             print("Entrada inválida. Por favor, digite um número válido.\n")
         time.sleep(2)
-
 
 # Função para o menu principal, permitindo escolher entre a área do aluno e a área da coordenação
 def menu_principal():
