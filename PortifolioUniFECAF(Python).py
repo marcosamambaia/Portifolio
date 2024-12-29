@@ -1,5 +1,7 @@
-import time
-import json
+import sys  # Importa funções e variáveis usadas para manipular o tempo de execução do Python (usado para finalizar o programa).
+import time  # Importa funções para trabalhar com tempo, como pausas (time.sleep).
+import json  # Importa funções para codificação e decodificação de dados no formato JSON (usado para salvar e carregar dados).
+
 
 # Dicionário para armazenar eventos
 evento = {}
@@ -235,10 +237,10 @@ def menu_principal():
         print('************** Controle de Eventos da UniFECAF **************\n')
         if tipo_usuario == "coordenador":
             print('Escolha a opção:\n')
-            print('(1) Área do Aluno (inscrever em eventos) \n(2) Área da Coordenação\n(3) Visualizar Eventos\n(4) Voltar ao Menu Inicial\n')
+            print('(1) Área do Aluno (inscrever em eventos) \n(2) Área da Coordenação\n(3) Visualizar Eventos\n(4) Voltar ao Menu Inicial\n(5) Sair\n')
         else:
             print('Escolha a opção:\n')
-            print('(1) Área do Aluno (inscrever em eventos) \n(3) Visualizar Eventos\n(4) Voltar ao Menu Inicial\n')
+            print('(1) Área do Aluno (inscrever em eventos) \n(3) Visualizar Eventos\n(4) Voltar ao Menu Inicial\n(5) Sair\n')
         try:
             Escolha_Usuario = int(input("Digite a opção desejada: "))
             if Escolha_Usuario == 1:
@@ -251,11 +253,16 @@ def menu_principal():
                     time.sleep(2)
             elif Escolha_Usuario == 4:
                 return  # Voltar ao menu inicial
+            elif Escolha_Usuario == 5:
+                print("Saindo do programa...")
+                time.sleep(1)
+                sys.exit()  # Finaliza o programa
             else:
                 print("Opção inválida. Tente novamente.\n")
         except ValueError:
             print("Entrada inválida. Por favor, digite um número válido.\n")
         time.sleep(2)
+
 
 # Função para iniciar o programa
 def iniciar_programa():
