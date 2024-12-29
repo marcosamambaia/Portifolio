@@ -1,21 +1,22 @@
+#***********************************************************************************************************
+#  
+# Aluno: Marco Antonio Monteiro Pedro
+# Data 29/12/2024
+# Modulo 'Computational Logic Using Python'
+# Portifolio
+#
+#***********************************************************************************************************
+#
+# A função 'Try/Except' foi implementada para prevenir entradas inválidas do usuário, 
+# evitando que o programa seja interrompido devido a erros. Essa abordagem também é 
+# aplicada na primeira execução do programa, pois, nesse momento, o arquivo 'txt.' ainda
+# não estará disponível e será criado posteriormente. Além disso, foi elaborado um
+# bloco 'Try/Except' dentro de um laço 'While True', permitindo que, caso uma entrada
+# incorreta seja digitada, o usuário tenha a oportunidade de tentar novamente. O código 
+# contém comentários explicativos sobre as linhas e seus funcionamentos para auxiliar na 
+# correção e avaliação por parte do professor.
+#
 #********************************************************************************************************
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-
 
 import sys  # Importa funções e variáveis usadas para manipular o tempo de execução do Python (usado para finalizar o programa).
 import time  # Importa funções para trabalhar com tempo, como pausas (time.sleep).
@@ -61,6 +62,8 @@ def menu_inicial():
         except ValueError:
             print("Entrada inválida. Por favor, digite um número válido.\n")
         time.sleep(2)
+
+
 # Função para visualizar todos os eventos cadastrados
 def visualizar_eventos():
     print("Eventos Atuais:")
@@ -107,6 +110,8 @@ def criar_evento():
         except ValueError:
             print("Entrada inválida. Por favor, insira valores corretos.\n")
         time.sleep(2)
+
+
 # Função para editar um evento existente
 def editar_evento():
     if not evento:
@@ -186,6 +191,8 @@ def visualizar_inscritos():
     else:
         print(f"O evento {Evento_name} não existe.\n")
     time.sleep(2)
+
+
 # Função para inscrever um aluno em um evento
 def inscrever_aluno():
     if not evento:
@@ -250,6 +257,7 @@ def menu_cordenador():
             print("Entrada inválida. Por favor, digite um número válido.\n")
         time.sleep(2)
 
+
 # Função para o menu principal, permitindo escolher entre a área do aluno e a área da coordenação
 def menu_principal():
     while True:
@@ -289,6 +297,7 @@ def iniciar_programa():
     while True:
         menu_inicial()
         menu_principal()
+        
 
 # Iniciar o programa
 iniciar_programa()
