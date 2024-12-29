@@ -1,3 +1,22 @@
+#********************************************************************************************************
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+
+
 import sys  # Importa funções e variáveis usadas para manipular o tempo de execução do Python (usado para finalizar o programa).
 import time  # Importa funções para trabalhar com tempo, como pausas (time.sleep).
 import json  # Importa funções para codificação e decodificação de dados no formato JSON (usado para salvar e carregar dados).
