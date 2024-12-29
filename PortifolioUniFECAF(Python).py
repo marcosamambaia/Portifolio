@@ -1,13 +1,26 @@
-# Importar biblioteca de temporizador
 import time
+import json
 
-# Dicionário para armazenar os eventos
+# Dicionário para armazenar eventos
 evento = {}
-
-# Variável para armazenar o tipo de usuário (coordenador ou aluno)
+# Variável global para armazenar o tipo de usuário (coordenador ou aluno)
 tipo_usuario = ""
 
-# Função para definir o tipo de usuário
+# Função para carregar dados dos eventos a partir de um arquivo txt
+def carregar_dados():
+    global evento
+    try:
+        with open('eventos.txt', 'r') as file:
+            evento = json.load(file)
+    except FileNotFoundError:
+        evento = {}
+
+# Função para salvar dados dos eventos em um arquivo txt
+def salvar_dados():
+    with open('eventos.txt', 'w') as file:
+        json.dump(evento, file)
+
+# Função para exibir o menu inicial e definir o perfil do usuário
 def menu_inicial():
     global tipo_usuario
     while True:
@@ -27,12 +40,11 @@ def menu_inicial():
         except ValueError:
             print("Entrada inválida. Por favor, digite um número válido.\n")
         time.sleep(2)
-
 # Função para visualizar todos os eventos cadastrados
 def visualizar_eventos():
     print("Eventos Atuais:")
     if not evento:
-        print("Nenhum evento cadastrado.")  # Exibe mensagem se não houver eventos
+        print("Nenhum evento cadastrado.")
     else:
         for nome, detalhes in evento.items():
             status_vagas = "Lotado" if len(detalhes['Inscritos']) >= detalhes['Quantidade de pessoas permitidas'] else "Vagas Disponíveis"
@@ -45,8 +57,6 @@ def visualizar_eventos():
             print(f"  Status: {status_vagas}")
             print("\n")
     time.sleep(2)
-
-
 
 # Função para criar um novo evento
 def criar_evento():
@@ -67,6 +77,7 @@ def criar_evento():
                 'Inscritos': []
             }
             print(f"Evento {Evento_name} marcado com sucesso.\n")
+            salvar_dados()  # Salvar dados no arquivo
             
             # Perguntar se deseja adicionar outro evento
             adicionar_mais = input('Deseja adicionar outro evento? (S/N): ')
@@ -75,8 +86,7 @@ def criar_evento():
         except ValueError:
             print("Entrada inválida. Por favor, insira valores corretos.\n")
         time.sleep(2)
-
-# Função para editar os detalhes de um evento existente
+# Função para editar um evento existente
 def editar_evento():
     if not evento:
         print("Nenhum evento disponível para edição.")
@@ -85,7 +95,6 @@ def editar_evento():
     Evento_name = input('Digite o nome do evento que deseja editar: ')
     if Evento_name in evento:
         try:
-            # Tenta executar o código abaixo, que pode causar erro se os dados de entrada forem inválidos
             print(f"Editando evento {Evento_name}")
             Descricao = input('Nova descrição do evento: ')
             Quant_Pess_Perm = int(input('Nova quantidade de pessoas permitidas: '))
@@ -101,8 +110,8 @@ def editar_evento():
                 'Inscritos': evento[Evento_name]['Inscritos']
             }
             print(f"Evento {Evento_name} atualizado com sucesso.\n")
+            salvar_dados()
         except ValueError:
-            # Exibe mensagem de erro se os dados de entrada forem inválidos
             print("Entrada inválida. Por favor, insira valores corretos.\n")
     else:
         print(f"O evento {Evento_name} não existe.\n")
@@ -117,8 +126,9 @@ def excluir_evento():
     visualizar_eventos()
     Evento_name = input('Digite o nome do evento que deseja excluir: ')
     if Evento_name in evento:
-        del evento[Evento_name]  # Remover o evento do dicionário
+        del evento[Evento_name]
         print(f"Evento {Evento_name} excluído com sucesso.\n")
+        salvar_dados()
     else:
         print(f"O evento {Evento_name} não existe.\n")
     time.sleep(2)
@@ -142,7 +152,6 @@ def visualizar_inscritos():
             for aluno in inscritos:
                 print(aluno)
             
-            # Loop para perguntar se deseja voltar ao menu principal
             while True:
                 voltar = input('Deseja voltar ao menu principal? (S/N): ')
                 if voltar.lower() == 's':
@@ -156,8 +165,7 @@ def visualizar_inscritos():
     else:
         print(f"O evento {Evento_name} não existe.\n")
     time.sleep(2)
-
-# Função para inscrever alunos em um evento
+# Função para inscrever um aluno em um evento
 def inscrever_aluno():
     if not evento:
         print("Nenhum evento disponível para inscrição.")
@@ -168,7 +176,7 @@ def inscrever_aluno():
     for nome, detalhes in evento.items():
         # Verificar se o número de inscritos é maior ou igual ao número de vagas permitidas
         if len(detalhes['Inscritos']) >= detalhes['Quantidade de pessoas permitidas']:
-            status_vagas = "Completo, nao tem vagas disponiveis"
+            status_vagas = "Completo, não tem vagas disponíveis"
         else:
             status_vagas = "Vagas Disponíveis"
         # Exibir o nome do evento e seu status de vagas
@@ -181,6 +189,7 @@ def inscrever_aluno():
             Aluno_nome = input('Digite seu nome: ')
             evento[Evento_name]['Inscritos'].append(Aluno_nome)
             print(f"{Aluno_nome} inscrito com sucesso no evento {Evento_name}.\n")
+            salvar_dados()
 
             # Verificar se o evento atingiu o número máximo de inscritos
             if len(evento[Evento_name]['Inscritos']) >= evento[Evento_name]['Quantidade de pessoas permitidas']:
@@ -206,7 +215,6 @@ def menu_cordenador():
             elif Opcao_Cordenador == 2:
                 criar_evento()
             elif Opcao_Cordenador == 3:
-                # Chamar a função editar_evento diretamente sem perguntar se deseja voltar ao menu principal
                 visualizar_eventos()
                 editar_evento()
             elif Opcao_Cordenador == 4:
@@ -220,7 +228,6 @@ def menu_cordenador():
         except ValueError:
             print("Entrada inválida. Por favor, digite um número válido.\n")
         time.sleep(2)
-
 
 # Função para o menu principal, permitindo escolher entre a área do aluno e a área da coordenação
 def menu_principal():
@@ -250,10 +257,12 @@ def menu_principal():
             print("Entrada inválida. Por favor, digite um número válido.\n")
         time.sleep(2)
 
-## Iniciar o programa
+# Função para iniciar o programa
 def iniciar_programa():
+    carregar_dados()  # Carregar dados ao iniciar o programa
     while True:
         menu_inicial()
         menu_principal()
 
+# Iniciar o programa
 iniciar_programa()
